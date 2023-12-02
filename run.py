@@ -16,21 +16,23 @@ QuestionInfo = Tuple[int, str, int, int]
 
 class MathWorksheetGenerator:
     """class for generating math worksheet of specified size and main_type"""
+    
+    num_x_cell = 7
+    num_y_cell = 8
+   
     def __init__(self, type_: str, max_number: int, question_count: int):
         self.main_type = type_
         self.max_number = max_number
         self.question_count = question_count
         self.pdf = FPDF()
 
-        self.small_font_size = 10
-        self.middle_font_size = 15
-        self.large_font_size = 30
-        self.size = 21
+        self.small_font_size = 8
+        self.middle_font_size = 10
+        self.large_font_size = 15
+        self.size = 8
         self.tiny_pad_size = 2
-        self.pad_size = 10
-        self.large_pad_size = 30
-        self.num_x_cell = 4
-        self.num_y_cell = 2
+        self.pad_size = 4
+        self.large_pad_size = 15
         self.font_1 = 'Times'
         self.font_2 = 'Helvetica'
 
@@ -99,7 +101,7 @@ class MathWorksheetGenerator:
         problems_per_page = self.split_arr(self.question_count, page_area)
         total_pages = len(problems_per_page)
         for page in range(total_pages):
-            self.pdf.add_page(orientation='L')
+            self.pdf.add_page(orientation='P')
             if problems_per_page[page] < self.num_x_cell:
                 self.print_question_row(data, page * page_area, problems_per_page[page])
             else:
@@ -122,7 +124,7 @@ class MathWorksheetGenerator:
     def print_top_row(self, question_num: str):
         """Helper function to print first character row of a question row"""
         self.pdf.set_font(self.font_1, size=self.middle_font_size)
-        self.pdf.cell(self.pad_size, self.pad_size, txt=question_num, border='LT', align='C')
+        self.pdf.cell(self.pad_size, self.pad_size, txt=question_num, border='LT', align='L')
         self.pdf.cell(self.size, self.pad_size, border='T')
         self.pdf.cell(self.size, self.pad_size, border='T')
         self.pdf.cell(self.pad_size, self.pad_size, border='TR')
@@ -217,17 +219,17 @@ class MathWorksheetGenerator:
 
     def make_answer_page(self, data):
         """Print answer sheet"""
-        self.pdf.add_page(orientation='L')
+        self.pdf.add_page(orientation='P')
         self.pdf.set_font(self.font_1, size=self.large_font_size)
         self.pdf.cell(self.large_pad_size, self.large_pad_size, txt='Answers', new_x=XPos.LEFT, new_y=YPos.NEXT, align='C')
 
         for i in range(len(data)):
             self.pdf.set_font(self.font_1, size=self.small_font_size)
-            self.pdf.cell(self.pad_size, self.pad_size, txt=f'{i + 1}:', border='TLB', align='R')
+            self.pdf.cell(self.pad_size, self.pad_size, txt=f'{i + 1}:', border='TLB', align='L')
             self.pdf.set_font(self.font_2, size=self.small_font_size)
-            self.pdf.cell(self.pad_size, self.pad_size, txt=str(data[i][3]), border='TB', align='R')
-            self.pdf.cell(self.tiny_pad_size, self.pad_size, border='TRB', align='R')
-            self.pdf.cell(self.tiny_pad_size, self.pad_size, align='C')
+            self.pdf.cell(self.pad_size+3, self.pad_size, txt=str(data[i][3]), border='TB', align='R')
+            self.pdf.cell(self.pad_size, self.pad_size, border='TRB', align='R')
+            self.pdf.cell(self.pad_size, self.pad_size, align='C')
             if i >= 9 and (i + 1) % 10 == 0:
                 self.pdf.ln()
 
