@@ -269,16 +269,17 @@ if __name__ == "__main__":
         help='largest number to use',
     )
     parser.add_argument(
-        '-q',
-        '--question_count',
+        '-p',
+        '--pages',
         type=int,
-        default='80',  # Must be a multiple of 40
-        help='total number of questions' '(default: 80)',
+        default='4',
+        help='total number of pages' '(default: 4)',
     )
     parser.add_argument('--output', metavar='filename.pdf', default='worksheet.pdf',
                         help='Output file to the given filename '
                              '(default: worksheet.pdf)')
     args = parser.parse_args()
 
+    question_count = (args.pages * MathWorksheetGenerator.num_x_cell * MathWorksheetGenerator.num_y_cell)
 
     main(args.type, args.max_num, question_count, args.output)
