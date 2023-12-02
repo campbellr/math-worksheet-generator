@@ -62,6 +62,8 @@ class MathWorksheetGenerator:
         num_2 = random.randint(0, self.max_number)
         if self.main_type == 'mix':
             current_type = random.choice(['+', '-', 'x', '/'])
+        if self.main_type == 'mix-add-sub':
+            current_type = random.choice(['+', '-'])
         else:
             current_type = self.main_type
 
@@ -250,13 +252,14 @@ if __name__ == "__main__":
     parser.add_argument(
         '--type',
         default='+',
-        choices=['+', '-', 'x', '/', 'mix'],
+        choices=['+', '-', 'x', '/', 'mix', 'mix-add-sub'],
         help='type of calculation: '
         '+: Addition; '
         '-: Subtraction; '
         'x: Multiplication; '
         '/: Division; '
         'mix: Mixed; '
+        'mix-add-sub: Mixed addition and subtraction; '
         '(default: +)',
     )
     parser.add_argument(
