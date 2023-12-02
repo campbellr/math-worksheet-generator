@@ -263,10 +263,10 @@ if __name__ == "__main__":
         '(default: +)',
     )
     parser.add_argument(
-        '--digits',
-        default='2',
-        choices=['1', '2', '3'],
-        help='range of numbers: 1: 0-9, 2: 0-99, 3: 0-999' '(default: 2 -> 0-99)',
+        '--max-num',
+        default='10',
+        type=int,
+        help='largest number to use',
     )
     parser.add_argument(
         '-q',
@@ -280,12 +280,5 @@ if __name__ == "__main__":
                              '(default: worksheet.pdf)')
     args = parser.parse_args()
 
-    # how many places, 1:0-9, 2:0-99, 3:0-999
-    if args.digits == "1":
-        size_ = 9
-    elif args.digits == "3":
-        size_ = 999
-    else:
-        size_ = 99
 
-    main(args.type, size_, args.question_count, args.output)
+    main(args.type, args.max_num, question_count, args.output)
